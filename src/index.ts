@@ -1,6 +1,6 @@
 import express, {type Express} from 'express';
 import multer from 'multer';
-import {helloWorld, user, memberships, accountScripts, accountServices, getSubdomain, appListening} from './handlers';
+import {handleHelloWorld, handleUser, handleMemberships, handleAccountsScripts, handleAccountsServices, handleSubdomain, appListening} from './handlers';
 import {port} from './constants';
 
 const app: Express = express();
@@ -9,18 +9,18 @@ const upload = multer({dest: 'uploads/'});
 
 app
 	// GET
-	.get('/', helloWorld)
-	.get('/client/v4', user)
-	.get('/client/v4/user', user)
-	.get('/client/v4/memberships', memberships)
-	.get('/client/v4/accounts/:accounts/workers/subdomain', getSubdomain)
-	.get('/client/v4/accounts/:accounts/workers/services/:services', accountServices)
+	.get('/', handleHelloWorld)
+	.get('/client/v4', handleUser)
+	.get('/client/v4/user', handleUser)
+	.get('/client/v4/memberships', handleMemberships)
+	.get('/client/v4/accounts/:accounts/workers/subdomain', handleSubdomain)
+	.get('/client/v4/accounts/:accounts/workers/services/:services', handleAccountsServices)
 	// POST
-	.post('/client/v4/accounts/:accounts/workers/scripts/:script/subdomain', accountScripts)
+	.post('/client/v4/accounts/:accounts/workers/scripts/:script/subdomain', handleAccountsScripts)
 	// PUT
-	.put('/client/v4/accounts/:accounts/workers/scripts/:scripts', upload.array('index.js'), accountScripts)
+	.put('/client/v4/accounts/:accounts/workers/scripts/:scripts', upload.array('index.js'), handleAccountsScripts)
 
-	.all('/', user)
+	.all('/', handleUser)
 	.use((err: any, req: any, res: any, next: any) => {
 		console.log('This is the invalid field ->', err.field);
 		console.log('error:', err);
