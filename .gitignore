@@ -4,3 +4,4 @@ src/*.json
 .json
 yarn.lock
 yarn-error.log
+uploads
