@@ -53,7 +53,7 @@ app.get('/client/v4/accounts/:accounts/workers/services/:services', accountServi
 app.get('/client/v4/accounts/:accounts/workers/subdomain', getSubdomain);
 app.all('/', user);
 
-app.post('/client/v4/accounts/:accounts/workers/scripts/:script/subdomain', postScriptSubdomain);
+app.post('/client/v4/accounts/:accounts/workers/scripts/:script/subdomain', accountScripts);
 
 app.put('/client/v4/accounts/:accounts/workers/scripts/:script', accountScripts);
 
