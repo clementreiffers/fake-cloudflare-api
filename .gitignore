@@ -1,5 +1,5 @@
 node_modules
-*.json
+src/*.json
 .idea
 .json
 yarn.lock
