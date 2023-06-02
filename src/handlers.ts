@@ -11,7 +11,10 @@ const readJsonAndSend = (jsonPath: string, res: Response) => 	{
 	});
 };
 
-const handleHelloWorld = (req: Request, res: Response) => res.send('hello world');
+const handleHelloWorld = (req: Request, res: Response) => {
+	res.send('hello world');
+};
+
 const appListening = () => {
 	console.log(`[server]: Server is running at http://localhost:${port}`);
 };
