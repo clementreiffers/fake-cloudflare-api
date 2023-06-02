@@ -30,19 +30,18 @@ const memberships = (req: Request, res: Response) => {
 };
 
 const accountServices = (req: Request, res: Response) => {
+	console.log('accountServices:', req.params);
 	readJsonAndSend('src/get_accounts_services.json', res);
 };
 
 const accountScripts = (req: Request, res: Response) => {
+	console.log('accountScripts', req.params);
 	readJsonAndSend('src/put_accounts_scripts.json', res);
 };
 
 const getSubdomain = (req: Request, res: Response) => {
 	readJsonAndSend('get_subdomain.json', res);
-};
-
-const postScriptSubdomain = (req: Request, res: Response) => {
-	res.send('done');
+	console.log('subdomain', req.params);
 };
 
 app.get('/', helloWorld);
