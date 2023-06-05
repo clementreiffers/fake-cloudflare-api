@@ -45,16 +45,6 @@ const postRoutes: RouteList = [
 	},
 ];
 
-const storage = multer.diskStorage({
-	destination: './uploads',
-	filename(req, file, cb) {
-		const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1E9)}`;
-		cb(null, file.fieldname + '-' + uniqueSuffix);
-	},
-});
-
-const up = multer({storage});
-
 const putRoutes: RouteList = [
 	{
 		method: 'put',
@@ -66,7 +56,7 @@ const putRoutes: RouteList = [
 			{name: './29bae8a03647eb9b55a10b5f2203b23d2b970081-index.wasm'},
 		]),
 		 */
-		upload: up.any(),
+		upload: upload.any(),
 	},
 ];
 

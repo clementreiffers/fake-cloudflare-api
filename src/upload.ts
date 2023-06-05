@@ -5,9 +5,7 @@ import path from 'path';
 import {type Request} from 'express';
 
 const storage = multer.diskStorage({
-	destination(req: Request, file: Express.Multer.File, cb) {
-		cb(null, 'uploads/'); // Dossier de destination des fichiers
-	},
+	destination: './uploads',
 	filename(req: Request, {originalname, fieldname}: Express.Multer.File, cb) {
 		const extension = path.extname(originalname);
 		const fileName = `${fieldname}-${Date.now()}${extension}`;
