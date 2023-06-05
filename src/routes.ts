@@ -1,7 +1,7 @@
 import {handleHelloWorld, handleMemberships, handleUser, handleSubdomain, handleAccountsScripts} from './handlers';
 import {upload} from './upload';
 import {type Route, type RouteList} from './types';
-import {type Express} from 'express';
+import {type Express, type RequestHandler} from 'express';
 import multer from 'multer';
 
 const getRoutes: RouteList = [
@@ -50,12 +50,6 @@ const putRoutes: RouteList = [
 		method: 'put',
 		route: '/client/v4/accounts/:accounts/workers/scripts/:scripts',
 		handler: handleAccountsScripts,
-		/* Upload: upload.fields([
-			{name: 'index.js'},
-			{name: 'shim.js'},
-			{name: './29bae8a03647eb9b55a10b5f2203b23d2b970081-index.wasm'},
-		]),
-		 */
 		upload: upload.any(),
 	},
 ];
@@ -67,7 +61,7 @@ const setRoutes = (app: Express, routes: RouteList): Express => {
 		switch (method) {
 			case 'get': return app.get(route, handler);
 			case 'post': return app.post(route, handler);
-			case 'put': return app.put(route, upload, handler);
+			case 'put': return app.put(route, upload!, handler);
 			default: return app;
 		}
 	};
