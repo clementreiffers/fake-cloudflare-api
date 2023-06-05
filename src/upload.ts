@@ -1,20 +1,17 @@
 
-// Configuration de Multer pour enregistrer les fichiers dans un dossier spécifique
-import multer from 'multer';
+import multer, {type StorageEngine} from 'multer';
 import path from 'path';
-import {type Request} from 'express';
+import {type Request, type Express} from 'express';
 
-const storage = multer.diskStorage({
+const storage: StorageEngine = multer.diskStorage({
 	destination: './uploads',
-	filename(req: Request, {originalname, fieldname}: Express.Multer.File, cb) {
-		const extension = path.extname(originalname);
-		const fileName = `${fieldname}-${Date.now()}${extension}`;
-		cb(null, fileName); // Nom du fichier
+	filename(req: Request, {originalname}: Express.Multer.File, cb) {
+		cb(null, originalname); // Nom du fichier
 	},
 });
 
 // Filtrer les fichiers par extension
-const fileFilter = function (req: any, file: any, cb: any) {
+const fileFilter = (req: any, file: any, cb: any) => {
 	const allowedExtensions = ['.js', '.wasm'];
 
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
