@@ -2,6 +2,7 @@ import {handleHelloWorld, handleMemberships, handleUser, handleSubdomain, handle
 import {upload} from './upload';
 import {type Route, type RouteList} from './types';
 import {type Express} from 'express';
+import multer from 'multer';
 
 const getRoutes: RouteList = [
 	{
@@ -44,12 +45,28 @@ const postRoutes: RouteList = [
 	},
 ];
 
+const storage = multer.diskStorage({
+	destination: './uploads',
+	filename(req, file, cb) {
+		const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1E9)}`;
+		cb(null, file.fieldname + '-' + uniqueSuffix);
+	},
+});
+
+const up = multer({storage});
+
 const putRoutes: RouteList = [
 	{
 		method: 'put',
 		route: '/client/v4/accounts/:accounts/workers/scripts/:scripts',
 		handler: handleAccountsScripts,
-		upload: upload.fields([{name: 'js', maxCount: 10}, {name: 'wasm', maxCount: 10}]),
+		/* Upload: upload.fields([
+			{name: 'index.js'},
+			{name: 'shim.js'},
+			{name: './29bae8a03647eb9b55a10b5f2203b23d2b970081-index.wasm'},
+		]),
+		 */
+		upload: up.any(),
 	},
 ];
 

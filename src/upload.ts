@@ -2,15 +2,15 @@
 // Configuration de Multer pour enregistrer les fichiers dans un dossier spécifique
 import multer from 'multer';
 import path from 'path';
+import {type Request} from 'express';
 
 const storage = multer.diskStorage({
-	destination(req, file, cb) {
+	destination(req: Request, file: Express.Multer.File, cb) {
 		cb(null, 'uploads/'); // Dossier de destination des fichiers
 	},
-	filename(req, file, cb) {
-		const extension = path.extname(file.originalname);
-		const fileName = `${file.fieldname}-${Date.now()}${extension}`;
-		console.log(fileName);
+	filename(req: Request, {originalname, fieldname}: Express.Multer.File, cb) {
+		const extension = path.extname(originalname);
+		const fileName = `${fieldname}-${Date.now()}${extension}`;
 		cb(null, fileName); // Nom du fichier
 	},
 });
