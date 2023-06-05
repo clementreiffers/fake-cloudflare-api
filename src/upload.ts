@@ -2,6 +2,7 @@
 import multer, {type FileFilterCallback, type StorageEngine} from 'multer';
 import path from 'path';
 import {type Request, type Express} from 'express';
+import {allowedExtensions} from './constants';
 
 const storage: StorageEngine = multer.diskStorage({
 	destination: './uploads',
@@ -10,10 +11,11 @@ const storage: StorageEngine = multer.diskStorage({
 	},
 });
 
-const fileFilter = (req: Request, file: Express.Multer.File, cb: FileFilterCallback) => {
-	const allowedExtensions = ['.js', '.wasm'];
+const isFileExtensionAccepted = (filename: string): boolean =>
+	allowedExtensions.includes(path.extname(filename));
 
-	if (allowedExtensions.includes(path.extname(file.originalname))) {
+const fileFilter = (req: Request, file: Express.Multer.File, cb: FileFilterCallback) => {
+	if (isFileExtensionAccepted(file.originalname)) {
 		cb(null, true);
 	} else {
 		cb(new Error('file not accepted because not js or wasm'));

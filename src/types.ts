@@ -1,11 +1,12 @@
-import {type Multer} from 'multer';
-import {type Request, type Response} from 'express';
+import {type RequestHandler} from 'express';
+
+type MethodHttp = 'get' | 'post' | 'put';
 
 type Route = {
-	method: 'get' | 'post' | 'put';
+	method: MethodHttp;
 	route: string;
-	handler: (req: Request, res: Response) => void;
-	upload?: any; // Todo: inspect the type used here
+	handler: RequestHandler;
+	upload?: RequestHandler;
 };
 
 type RouteList = Route[];
