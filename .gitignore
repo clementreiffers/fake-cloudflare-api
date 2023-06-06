@@ -5,4 +5,3 @@ src/*.json
 yarn.lock
 yarn-error.log
 uploads
-src/defaultResponses
