@@ -25,7 +25,7 @@ const handleMemberships = (req: Request, res: Response): void => {
 };
 
 const handleAccountsServices = (req: Request, res: Response): void => {
-	// Console.log('accountServices:', req.params);
+	console.log('accountServices:', req.params);
 	readJsonAndSend(getAccountServicesJson, res);
 };
 
