@@ -12,8 +12,10 @@ of the Cloudflare API, allowing seamless integration with the default Cloudflare
 4. [How it works](#how-it-works)
 
 ## Installation
-First, clone this project: git clone https://github.com/clementreiffers/fake-cloudflare-api.git.
-Then navigate to the directory: cd fake-cloudflare-api and install all dependencies by running yarn or npm i.
+
+First, clone this project: `git clone https://github.com/clementreiffers/fake-cloudflare-api.git`
+
+Then navigate to the directory: `cd fake-cloudflare-api` and install all dependencies by running `yarn` or `npm i`
 
 Use aws configure to connect to your S3 bucket.
 
@@ -32,16 +34,18 @@ the server if you change a file using nodemon.
 > **Note**: The login feature has not been implemented yet. Currently, the server only 
 > allows publishing code to a server.
 
-Once you have implemented your first worker (see examples here), you can use this fake API.
+Once you have implemented your first worker 
+[(see examples here)](https://developers.cloudflare.com/workers/examples#:~:text=Return%20small%20HTML%20page%20Deliver%20an%20HTML%20page,HTML%20from%20the%20response%2C%20and%20serve%20that%20HTML), 
+you can use this fake API.
 
 Previously, when publishing to the Cloudflare server, you needed to use the wrangler publish command, which did it automatically.
 
 Now, if you run this server using yarn start, you can run `CLOUDFLARE_API_BASE_URL=http://YOUR_SERVER:3000/client/v4 wrangler publish`.
-Wrangler will build your project and send it to the server. Then, the server will directly send it to your S3 bucket.
+[Wrangler](https://github.com/cloudflare/workers-sdk#readme) will build your project and send it to the server. Then, the server will directly send it to your S3 bucket.
 
 ## How It Works
 
-Imagine someone who has finished coding their own Worker. They will use Wrangler to push their code, which in turn will 
+Imagine someone who has finished coding their own Worker. They will use [Wrangler](https://github.com/cloudflare/workers-sdk#readme) to push their code, which in turn will 
 fetch this API. This API will then publish the code directly to an S3 bucket.
 
 ```mermaid
