@@ -25,19 +25,18 @@ const handleMemberships = (req: Request, res: Response): void => {
 };
 
 const handleAccountsServices = (req: Request, res: Response): void => {
-	console.log('accountServices:', req.params);
+	// Console.log('accountServices:', req.params);
 	readJsonAndSend(getAccountServicesJson, res);
 };
 
 const handleAccountsScripts = (req: Request, res: Response): void => {
-	console.log('accountScripts', req.params);
-	console.log('body', req.file);
+	// Console.log('accountScripts', req.params);
 	readJsonAndSend(getAccountServicesJson, res);
 };
 
 const handleSubdomain = (req: Request, res: Response): void => {
 	readJsonAndSend(getSubdomainJson, res);
-	console.log('subdomain', req.params);
+	// Console.log('subdomain', req.params);
 };
 
 const handleUser = (req: Request, res: Response): void => {
