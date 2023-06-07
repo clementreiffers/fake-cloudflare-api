@@ -2,12 +2,10 @@ import routes from './routes';
 
 const port = 3000;
 
-const membershipJson = 'src/defaultResponses/get_memberships.json';
-
-const getAccountServicesJson = 'src/defaultResponses/get_accounts_services.json';
-
-const getSubdomainJson = 'src/defaultResponses/get_subdomain.json';
-
 const allowedExtensions: string[] = ['.js', '.wasm'];
 
-export {port, membershipJson, getAccountServicesJson, getSubdomainJson, allowedExtensions, routes};
+const s3Endpoint = 'https://s3.fr-par.scw.cloud';
+const s3Region = 'fr-par';
+const s3Bucket = 'stage-cf-worker';
+
+export {port, allowedExtensions, routes, s3Region, s3Endpoint, s3Bucket};
