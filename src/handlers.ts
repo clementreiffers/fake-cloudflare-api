@@ -1,16 +1,6 @@
 import {type Request, type Response} from 'express';
-import fs from 'fs';
-import {getAccountServicesJson, getSubdomainJson, membershipJson, port} from './constants';
-
-const readJsonAndSend = (jsonPath: string, res: Response): void => 	{
-	fs.readFile(jsonPath, (err: any, data: Buffer) => {
-		if (err) {
-			console.log(err);
-		}
-
-		res.send(JSON.parse(data.toString()));
-	});
-};
+import {port} from './constants';
+import {accountScript, accountServices, membership, subdomain} from './defaultResponses';
 
 const handleHelloWorld = (req: Request, res: Response): void => {
 	res.send('hello world');
@@ -21,22 +11,19 @@ const handleAppListening = (): void => {
 };
 
 const handleMemberships = (req: Request, res: Response): void => {
-	readJsonAndSend(membershipJson, res);
+	res.send(membership);
 };
 
 const handleAccountsServices = (req: Request, res: Response): void => {
-	console.log('accountServices:', req.params);
-	readJsonAndSend(getAccountServicesJson, res);
+	res.send(accountServices);
 };
 
 const handleAccountsScripts = (req: Request, res: Response): void => {
-	// Console.log('accountScripts', req.params);
-	readJsonAndSend(getAccountServicesJson, res);
+	res.send(accountScript);
 };
 
 const handleSubdomain = (req: Request, res: Response): void => {
-	readJsonAndSend(getSubdomainJson, res);
-	// Console.log('subdomain', req.params);
+	res.send(subdomain);
 };
 
 const handleUser = (req: Request, res: Response): void => {
