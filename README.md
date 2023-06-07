@@ -48,10 +48,17 @@ Now, if you run this server using yarn start, you can run `CLOUDFLARE_API_BASE_U
 Imagine someone who has finished coding their own Worker. They will use [Wrangler](https://github.com/cloudflare/workers-sdk#readme) to push their code, which in turn will 
 fetch this API. This API will then publish the code directly to an S3 bucket.
 
+once all code published, the fake API will call a Kubernetes controller to update the architecture.
+this feature can be deactivated.
+
+> **Warning**:
+> the feature to call a Kubernetes Controller has not been implemented yet
+
 ```mermaid
 flowchart LR
     subgraph Cloud 
         fake-cloudflare-api --> |push codes| S3
+        fake-cloudflare-api --> |webhook| Kubernetes
     end
     client --> wrangler --> |https| fake-cloudflare-api
 ```
