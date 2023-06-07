@@ -1,8 +1,13 @@
-import {handleHelloWorld, handleMemberships, handleUser, handleSubdomain, handleAccountsScripts} from './handlers';
+import {
+	handleHelloWorld,
+	handleMemberships,
+	handleUser,
+	handleSubdomain,
+	handleAccountsServices,
+} from './handlers';
 import {upload} from './upload';
 import {type Route, type RouteList} from './types';
-import {type Express, type RequestHandler} from 'express';
-import multer from 'multer';
+import {type Express} from 'express';
 
 const getRoutes: RouteList = [
 	{
@@ -33,7 +38,7 @@ const getRoutes: RouteList = [
 	{
 		method: 'get',
 		route: '/client/v4/accounts/:accounts/workers/services/:services',
-		handler: handleAccountsScripts,
+		handler: handleAccountsServices,
 	},
 ];
 
@@ -41,7 +46,7 @@ const postRoutes: RouteList = [
 	{
 		method: 'post',
 		route: '/client/v4/accounts/:accounts/workers/scripts/:script/subdomain',
-		handler: handleAccountsScripts,
+		handler: handleAccountsServices,
 	},
 ];
 
@@ -49,7 +54,7 @@ const putRoutes: RouteList = [
 	{
 		method: 'put',
 		route: '/client/v4/accounts/:accounts/workers/scripts/:scripts',
-		handler: handleAccountsScripts,
+		handler: handleAccountsServices,
 		upload: upload.any(),
 	},
 ];

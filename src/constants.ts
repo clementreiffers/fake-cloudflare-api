@@ -2,7 +2,7 @@ import routes from './routes';
 
 const port = 3000;
 
-const membershipJson = 'src/defaultResponses/memberships_response_1.json';
+const membershipJson = 'src/defaultResponses/get_memberships.json';
 
 const getAccountServicesJson = 'src/defaultResponses/get_accounts_services.json';
 
