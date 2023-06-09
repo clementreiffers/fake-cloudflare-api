@@ -5,7 +5,7 @@ import {type Request, type Express} from 'express';
 import {S3Client} from '@aws-sdk/client-s3';
 import multerS3 from 'multer-s3';
 
-const s3: S3Client = new S3Client({endpoint, region});
+const s3: S3Client = new S3Client({endpoint: 'https://s3.fr-par.scw.cloud', region});
 
 const generateS3Filename = (req: Request, file: Express.Multer.File): string =>
 	`${req.params?.accounts}/${req.params?.scripts}/${file.originalname}`;
