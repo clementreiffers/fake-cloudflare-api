@@ -13,7 +13,6 @@ const handleGenerationAndUploadCapnp = async (req: Request, res: Response) => {
 		prop('Contents'),
 		createListFiles,
 		generator(8080, '*'),
-		tap(console.log),
 		createFileInS3(bucketName, fileName, accounts),
 		() => {
 			handleAccountsServices(req, res);
