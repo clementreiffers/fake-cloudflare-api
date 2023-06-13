@@ -1,14 +1,31 @@
 import {type Filename, type FilenameList, type Ip, type WorkerType} from './types';
-import {join, pipe, map} from 'ramda';
+import {comparator, join, last, map, pipe, replace, sort, test, trim, split} from 'ramda';
 
 const workerGenerator = (file: Filename, nth: number): WorkerType => {
-	const workerModuleGenerator = (file: string): string =>
+	const hasEntrypoint = test(/entrypoint/);
+
+	const compareEntrypoint = comparator((a: string, b: string) => hasEntrypoint(a) && !hasEntrypoint(b));
+
+	const getFilenameOnly = (file: string): string => file.split('/').pop()!;
+
+	const workerModuleGenerator = (file: string) =>
 		/\.(m|)js$/.test(file)
 			? `(name = "entrypoint", esModule = embed "${file}")`
-			: `(name = "./index.wasm", wasm = embed "${file}")`;
+			: `(name = "${getFilenameOnly(file)}", wasm = embed "${file}")`;
 
-	const manageModules = (file: Filename) =>
-		pipe(map(workerModuleGenerator), join(','))(file);
+	const removeFirstAndLastCommas = (str: string): string => pipe(
+		trim,
+		replace(/^,*/, ''),
+		replace(/,*$/, ''),
+	)(str);
+
+	const manageModules = (file: Filename): string =>
+		pipe(
+			map(workerModuleGenerator),
+			sort(compareEntrypoint),
+			join(','),
+			removeFirstAndLastCommas,
+		)(file);
 
 	const name = `w${nth}`;
 
@@ -25,7 +42,6 @@ const servicesCapnpify = (workerList: WorkerType[]): string =>
 	`services = [${workerList.map(createService).join('')}],`;
 
 const createSocket = (defaultPort: number, defaultIp: string) => (worker: WorkerType) =>
-
 	`(name = "http", address = "${defaultIp}:${defaultPort++}", http = (), service = "${worker.name}")`;
 
 const socketsCapnpify = (workerList: WorkerType[], defaultPort: number, defaultIp: Ip): string =>

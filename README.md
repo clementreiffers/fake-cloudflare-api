@@ -57,8 +57,13 @@ this feature can be deactivated.
 ```mermaid
 flowchart LR
     subgraph Cloud 
-        fake-cloudflare-api --> |push codes| S3
-        fake-cloudflare-api --> |webhook| Kubernetes
+        subgraph Kubernetes
+            fake-cloudflare-api --> |trigger| capnp-generator 
+            capnp-generator --> |trigger| build-step     
+            build-step --> |trigger| deployment-step
+        end
+        fake-cloudflare-api --> |push code| S3
+        capnp-generator --> |push capnp| S3
     end
     client --> wrangler --> |https| fake-cloudflare-api
 ```
