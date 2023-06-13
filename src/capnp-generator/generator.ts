@@ -25,7 +25,6 @@ const servicesCapnpify = (workerList: WorkerType[]): string =>
 	`services = [${workerList.map(createService).join('')}],`;
 
 const createSocket = (defaultPort: number, defaultIp: string) => (worker: WorkerType) =>
-
 	`(name = "http", address = "${defaultIp}:${defaultPort++}", http = (), service = "${worker.name}")`;
 
 const socketsCapnpify = (workerList: WorkerType[], defaultPort: number, defaultIp: Ip): string =>

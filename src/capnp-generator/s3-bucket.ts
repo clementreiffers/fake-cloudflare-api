@@ -16,7 +16,7 @@ import {
 	splitAt,
 	test,
 	values,
-	zip, concat, tap,
+	zip, concat, tap, split, drop, join,
 } from 'ramda';
 import {regexFileAccepted} from './constants';
 import {type PromiseResult} from 'aws-sdk/lib/request';
@@ -44,6 +44,7 @@ const createListFiles = (contentData: Array<Record<string, any>>): string[][] =>
 	pipe(
 		pluck('Key'),
 		reject(isNil),
+		map(pipe(split('/'), drop(1), join('/'))),
 		conserveOnlyJsOrWasmFiles,
 		convertToStringList,
 		map(splitPathFile),
@@ -54,13 +55,14 @@ const createListFiles = (contentData: Array<Record<string, any>>): string[][] =>
 
 const initS3Client = (endpoint?: string): S3 => endpoint === undefined ? new S3() : new S3({endpoint});
 
-const getAllFilesPathsFromBucket = (bucketName: string, endpoint?: string) =>
-	async (): Promise<PromiseResult<ListObjectsV2Output, AWSError>> =>
-		initS3Client(endpoint).listObjectsV2({
-		// eslint-disable-next-line @typescript-eslint/naming-convention
-			Bucket: bucketName,
+const getAllFilesPathsFromBucket = (bucketName: string, account: string, endpoint?: string) =>
+	async (): Promise<PromiseResult<ListObjectsV2Output, AWSError>> => {
+		console.log(account);
+		return initS3Client(endpoint).listObjectsV2({
 			// eslint-disable-next-line @typescript-eslint/naming-convention
-			Prefix: '',
+			Bucket: bucketName,
+			Prefix: `${account}/`,
 		}).promise();
+	};
 
 export {createListFiles, getAllFilesPathsFromBucket};
