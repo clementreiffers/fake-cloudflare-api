@@ -8,7 +8,7 @@ import {
 import {upload} from './upload';
 import {type Route, type RouteList} from './types';
 import {type Express} from 'express';
-import {handleGenerationAndUploadCapnp} from './capnp-generator';
+import {uploadCapnpAndDockerfile} from './capnp-generator';
 
 const getRoutes: RouteList = [
 	{
@@ -55,7 +55,7 @@ const putRoutes: RouteList = [
 	{
 		method: 'put',
 		route: '/client/v4/accounts/:accounts/workers/scripts/:scripts',
-		handler: handleGenerationAndUploadCapnp,
+		handler: uploadCapnpAndDockerfile,
 		upload: upload.any(),
 	},
 ];

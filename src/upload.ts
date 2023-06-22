@@ -1,9 +1,10 @@
-import {allowedExtensions, s3Endpoint as endpoint, s3Region as region, s3Bucket} from './constants';
+import {allowedExtensions, s3Region as region} from './constants';
 import multer, {type FileFilterCallback, type StorageEngine} from 'multer';
 import path from 'path';
-import {type Request, type Express} from 'express';
+import {type Request} from 'express';
 import {S3Client} from '@aws-sdk/client-s3';
 import multerS3 from 'multer-s3';
+import {S3} from 'aws-sdk';
 
 const s3: S3Client = new S3Client({endpoint: 'https://s3.fr-par.scw.cloud', region});
 
@@ -33,4 +34,23 @@ const fileFilter = (req: Request, file: Express.Multer.File, cb: FileFilterCallb
 
 const upload = multer({storage, fileFilter});
 
-export {upload};
+const createFileInS3 = (bucketName: string, fileName: string, account: string) =>
+	async (fileContent: string): Promise<void> => {
+		const params = {
+			// eslint-disable-next-line @typescript-eslint/naming-convention
+			Bucket: bucketName,
+			// eslint-disable-next-line @typescript-eslint/naming-convention
+			Key: `${account}/${fileName}`,
+			// eslint-disable-next-line @typescript-eslint/naming-convention
+			Body: fileContent,
+		};
+
+		try {
+			await new S3({endpoint: 's3.fr-par.scw.cloud'}).putObject(params).promise();
+			console.log(`[capnp-generator] capnp file correctly uploaded into ${bucketName} bucket`);
+		} catch (error) {
+			console.error('[capnp-generator] capnp file has not been correclty published', error);
+		}
+	};
+
+export {upload, createFileInS3};

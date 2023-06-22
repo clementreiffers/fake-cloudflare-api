@@ -17,9 +17,9 @@ export const createFileInS3 = (bucketName: string, fileName: string, account: st
 
 		try {
 			await s3.putObject(params).promise();
-			console.log(`[capnp-generator] capnp file correctly uploaded into ${bucketName} bucket`);
+			console.log(`[capnp-dockerfile-generator] ${fileName} correctly uploaded into ${bucketName} bucket`);
 		} catch (error) {
-			console.error('[capnp-generator] capnp file has not been correclty published', error);
+			console.error(`[capnp-dockerfile-generator] ${fileName} has not been correclty published`, error);
 		}
 	};
 
