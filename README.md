@@ -1,5 +1,7 @@
 # fake-cloudflare-api
 
+> **Warning**: this repository is deprecated, use [this Api instead](https://github.com/clementreiffers/fake-cf-api)
+
 The "Fake Cloudflare API" is a tool designed to simplify the deployment of 
 [Cloudflare Workers](https://workers.cloudflare.com/) by emulating the functionality 
 of the Cloudflare API, allowing seamless integration with the default Cloudflare CLI, [Wrangler](https://github.com/cloudflare/workers-sdk#readme).
